@@ -1,12 +1,13 @@
 package mobs;
 
 import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class levelZombie implements Listener {
@@ -31,24 +32,37 @@ public class levelZombie implements Listener {
 
 		if (playerLevel == 0) {
 			return null;
-		} else if (playerLevel < 10 && playerLevel >= 2) {
+		} else if (playerLevel >= 2) {
 
 			stack[4] = new ItemStack(Material.WOODEN_SWORD);
 
 			if (playerLevel >= 5) {
 
 				stack[0] = new ItemStack(Material.LEATHER_BOOTS);
-				stack[4] = new ItemStack(Material.WOODEN_SWORD);
 
-				if (playerLevel >= 6) {
+				if (playerLevel >= 10) {
 
 					stack[3] = new ItemStack(Material.LEATHER_HELMET);
 
-					if (playerLevel >= 8) {
+					if (playerLevel >= 15) {
 						stack[1] = new ItemStack(Material.LEATHER_LEGGINGS);
+						stack[4] = new ItemStack(Material.STONE_SWORD);
 
-						if (playerLevel >= 9) {
+						if (playerLevel >= 20) {
 							stack[2] = new ItemStack(Material.LEATHER_CHESTPLATE);
+							stack[0] = new ItemStack(Material.GOLDEN_BOOTS);
+
+							if (playerLevel >= 25) {
+								stack[3] = new ItemStack(Material.GOLDEN_HELMET);
+								stack[4] = new ItemStack(Material.GOLDEN_SWORD);
+
+								if (playerLevel >= 30) {
+									stack[2] = new ItemStack(Material.GOLDEN_CHESTPLATE);
+									stack[1] = new ItemStack(Material.GOLDEN_LEGGINGS);
+								}
+
+							}
+
 						}
 					}
 				}
@@ -62,8 +76,16 @@ public class levelZombie implements Listener {
 	}
 
 	@EventHandler
-	public void onJoinEvent(PlayerJoinEvent event) {
-		event.getPlayer().sendMessage("Du bist aufn Server");
+	public void onJoinEvent(CreatureSpawnEvent event) {
+		if (
+
+		(event.getEntityType() == EntityType.SLIME) || (event.getEntityType() == EntityType.CREEPER)
+				|| (event.getEntityType() == EntityType.SPIDER)
+
+		) {
+
+			event.getEntity().remove();
+		}
 	}
 
 	@EventHandler
@@ -72,9 +94,10 @@ public class levelZombie implements Listener {
 		if (entityEvent.getEntity() instanceof Zombie) {
 			if (entityEvent.getTarget() instanceof Player) {
 				Player ourUser = (Player) entityEvent.getTarget();
-				ourUser.sendMessage("Du wirst vom Zombie beobachtet!");
+				//ourUser.sendMessage("Du wirst vom Zombie beobachtet!");
 				((Zombie) entityEvent.getEntity()).setCustomName("Zombie Level" + ourUser.getLevel());
-
+				((Zombie) entityEvent.getEntity()).setLootTable(null);
+				
 				ItemStack[] stack = createItemStackDependOnLevel(ourUser.getLevel());
 
 				((Zombie) entityEvent.getEntity()).getEquipment().setBoots(stack[0]);
@@ -86,7 +109,6 @@ public class levelZombie implements Listener {
 			}
 
 		}
-
 
 	}
 
