@@ -1,86 +1,150 @@
 package gui;
 
-import java.util.Arrays;
-
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.Material;
 
-public class UpgradeGui implements Listener {
+public class UpgradeGui {
 
-	private final Inventory inv;
+	final private String upgradeGuiName = "UpgradeGui";
+	Player user = null;
 
 	public UpgradeGui() {
-        // Create a new inventory, with no owner (as this isn't a real inventory), a size of nine, called example
-        inv = Bukkit.createInventory(null, 9, "Example");
-
-        // Put the items into the inventory
-        initializeItems();
-    }
-
-	// You can call this whenever you want to put the items in
-	public void initializeItems() {
-		inv.addItem(createGuiItem(Material.DIAMOND_SWORD, "Example Sword", "§aFirst line of the lore",
-				"§bSecond line of the lore"));
-		inv.addItem(createGuiItem(Material.IRON_HELMET, "§bExample Helmet", "§aFirst line of the lore",
-				"§bSecond line of the lore"));
+		
+	}
+	
+	public UpgradeGui(Player getUser) {
+		this.user = getUser;
 	}
 
-	// Nice little method to create a gui item with a custom name, and description
-	protected ItemStack createGuiItem(final Material material, final String name, final String... lore) {
-		final ItemStack item = new ItemStack(material, 1);
-		final ItemMeta meta = item.getItemMeta();
-
-		// Set the name of the item
-		meta.setDisplayName(name);
-
-		// Set the lore of the item
-		meta.setLore(Arrays.asList(lore));
-
-		item.setItemMeta(meta);
-
-		return item;
+	public String getName() {
+		return this.upgradeGuiName;
 	}
+	
+	public void openGui() {
 
-	// You can open the inventory with this
-	public void openInventory(final HumanEntity ent) {
-		ent.openInventory(inv);
-	}
-
-	// Check for clicks on items
-	@EventHandler
-	public void onInventoryClick(final InventoryClickEvent e) {
-		if (e.getInventory() != inv)
-			return;
-
-		e.setCancelled(true);
-
-		final ItemStack clickedItem = e.getCurrentItem();
-
-		// verify current item is not null
-		if (clickedItem == null || clickedItem.getType() == Material.AIR)
-			return;
-
-		final Player p = (Player) e.getWhoClicked();
-
-		// Using slots click is a best option for your inventory click's
-		p.sendMessage("You clicked at slot " + e.getRawSlot());
-	}
-
-	// Cancel dragging in our inventory
-	@EventHandler
-	public void onInventoryClick(final InventoryDragEvent e) {
-		if (e.getInventory() == inv) {
-			e.setCancelled(true);
+		Inventory upgradeGui = Bukkit.createInventory(user, 9, upgradeGuiName);
+		ItemStack[] stack = new ItemStack[5];
+		/*
+		 * 0 = Boots 1 = Leggins 2 = Chestplate 3 = Head 4 = Sword
+		 */
+		
+		user.sendMessage(user.getInventory().getChestplate().getType().toString());
+		
+		
+		
+		
+		user.sendMessage(
+				user.getInventory().getBoots().getType().toString() + "\n" +
+				user.getInventory().getLeggings().getType().toString() + "\n" +
+				user.getInventory().getChestplate().getType().toString() + "\n" +
+				user.getInventory().getHelmet().getType().toString() + "\n" 
+				);
+		
+		switch (user.getInventory().getBoots().getType()) {
+		case LEATHER_BOOTS:
+			stack[0] = new ItemStack(Material.GOLDEN_BOOTS);
+			break;
+		case GOLDEN_BOOTS:
+			stack[0] = new ItemStack(Material.CHAINMAIL_BOOTS);
+			break;
+		case CHAINMAIL_BOOTS:
+			stack[0] = new ItemStack(Material.IRON_BOOTS);
+			break;
+		case IRON_BOOTS:
+			stack[0] = new ItemStack(Material.DIAMOND_BOOTS);
+			break;
+		default:
+			user.sendMessage("Du hast stinkesocken!");
+			stack[0] = new ItemStack(Material.DIRT);
+			break;
 		}
+		
+		switch (user.getInventory().getLeggings().getType()) {
+		case LEATHER_LEGGINGS:
+			stack[1] = new ItemStack(Material.GOLDEN_LEGGINGS);
+			break;
+		case GOLDEN_LEGGINGS:
+			stack[1] = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+			break;
+		case CHAINMAIL_LEGGINGS:
+			stack[1] = new ItemStack(Material.IRON_LEGGINGS);
+			break;
+		case IRON_LEGGINGS:
+			stack[1] = new ItemStack(Material.DIAMOND_LEGGINGS);
+			break;
+		default:
+			stack[1] = new ItemStack(Material.DIRT);
+			break;
+		}
+		
+		switch (user.getInventory().getChestplate().getType()) {
+		case LEATHER_CHESTPLATE:
+			stack[2] = new ItemStack(Material.GOLDEN_CHESTPLATE);
+			break;
+		case GOLDEN_CHESTPLATE:
+			stack[2] = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+			break;
+		case CHAINMAIL_CHESTPLATE:
+			stack[2] = new ItemStack(Material.IRON_CHESTPLATE);
+			break;
+		case IRON_CHESTPLATE:
+			stack[2] = new ItemStack(Material.DIAMOND_CHESTPLATE);
+			break;
+		default:
+			stack[2] = new ItemStack(Material.DIRT);
+			break;
+		}
+		
+		switch (user.getInventory().getHelmet().getType()) {
+		case LEATHER_HELMET:
+			user.sendMessage("Lederkopf");
+			stack[3] = new ItemStack(Material.GOLDEN_HELMET);
+			break;
+		case GOLDEN_HELMET:
+			stack[3] = new ItemStack(Material.CHAINMAIL_HELMET);
+			break;
+		case CHAINMAIL_HELMET:
+			stack[3] = new ItemStack(Material.IRON_HELMET);
+			break;
+		case IRON_HELMET:
+			stack[3] = new ItemStack(Material.DIAMOND_HELMET);
+			break;
+		default:
+			stack[3] = new ItemStack(Material.DIRT);
+			break;
+		}
+		
+		switch (user.getInventory().getItem(0).getType()) {
+		case WOODEN_SWORD:
+			stack[4] = new ItemStack(Material.STONE_SWORD);
+			break;
+		case STONE_SWORD:
+			stack[4] = new ItemStack(Material.GOLDEN_SWORD);
+			break;
+		case GOLDEN_SWORD:
+			stack[4] = new ItemStack(Material.IRON_SWORD);
+			break;
+		case IRON_SWORD:
+			stack[4] = new ItemStack(Material.DIAMOND_SWORD);
+			break;
+		default:
+			stack[4] = new ItemStack(Material.DIRT);
+			break;
+		}
+		
+		
+
+		
+		for(int i = 0; i < stack.length; i++) {
+			user.sendMessage(stack[i].getType().toString());
+		}
+		
+		upgradeGui.setContents(stack);
+		user.openInventory(upgradeGui);
+
 	}
 
 }

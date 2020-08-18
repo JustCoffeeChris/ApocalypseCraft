@@ -19,9 +19,10 @@ import org.bukkit.entity.Player;
 public class LootEvent implements Listener {
 
 	private static HashMap<Location, Long> usedLoot = new HashMap<Location, Long>();
-	final private ArrayList<Material> lootableObject = new ArrayList<Material>(Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER));
-	
-	
+	final private ArrayList<Material> lootableObject = new ArrayList<Material>(
+			Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER));
+	final private long cooldownTime = 10;
+
 	private void givePlayerLootBarrel(Player user) {
 
 		for (int i = 0; i < 2; i++) {
@@ -64,15 +65,15 @@ public class LootEvent implements Listener {
 
 		user.getInventory().addItem(new ItemStack(Material.DIAMOND_BLOCK));
 	}
-	
+
 	private void givePlayerLootCauldron(Player user) {
 		user.getInventory().addItem(new ItemStack(Material.GOLD_BLOCK));
 	}
-	
+
 	private void givePlayerLootComposter(Player user) {
-		
+
 		Random rnd = new Random();
-		
+
 		for (int x = 0; x != 3; x++) {
 			switch (rnd.nextInt(3)) {
 			case 1:
@@ -86,7 +87,7 @@ public class LootEvent implements Listener {
 				break;
 			}
 		}
-		
+
 	}
 
 	@EventHandler
@@ -99,35 +100,29 @@ public class LootEvent implements Listener {
 				long old = usedLoot.get(event.getClickedBlock().getLocation());
 				long ellapsed = ((old - now) / 1000) * -1;
 
-				event.getPlayer().sendMessage("EllapsedTime: " + ellapsed);
-
-				if (ellapsed > 10) {
+				if ((this.cooldownTime - ellapsed) <= 0) {
 
 					usedLoot.remove(event.getClickedBlock().getLocation());
 
-				} else {
-					event.getPlayer().sendMessage("Dieses Objekt wurde bereits gelootet! ");
+				}
+
+				if (usedLoot.containsKey(event.getClickedBlock().getLocation())) {
+					return;
 				}
 			}
 
-			if (!(usedLoot.containsKey(event.getClickedBlock().getLocation()))) {
-				
-				
-				if ((event.getClickedBlock().getType() == Material.BARREL)) {
-					event.getPlayer().sendMessage("Loot! Yummy!");
-					givePlayerLootBarrel(event.getPlayer());
-					
-				}else if(event.getClickedBlock().getType() == Material.CAULDRON) {
-					givePlayerLootCauldron(event.getPlayer());
-					
-				}else if(event.getClickedBlock().getType() == Material.COMPOSTER) {
-					
-					givePlayerLootComposter(event.getPlayer());
-				}
-				
-				
-				usedLoot.put(event.getClickedBlock().getLocation(), System.currentTimeMillis());
+			if ((event.getClickedBlock().getType() == Material.BARREL)) {
+				givePlayerLootBarrel(event.getPlayer());
+
+			} else if (event.getClickedBlock().getType() == Material.CAULDRON) {
+				givePlayerLootCauldron(event.getPlayer());
+
+			} else if (event.getClickedBlock().getType() == Material.COMPOSTER) {
+				givePlayerLootComposter(event.getPlayer());
+
 			}
+
+			usedLoot.put(event.getClickedBlock().getLocation(), System.currentTimeMillis());
 
 		}
 	}

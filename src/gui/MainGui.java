@@ -11,13 +11,20 @@ import org.bukkit.inventory.ItemStack;
 
 public class MainGui implements CommandExecutor{
 
+	
+	final private String mainGuiName = "Choose Gui";
+	
+	public String getName() {
+		return mainGuiName;
+	}
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String arg2, String[] arg3) {
 		
 		if(sender instanceof Player) {
 			Player user = (Player) sender;
 			
-			Inventory mainGui = Bukkit.createInventory(user, 9, "Choose Gui");
+			Inventory mainGui = Bukkit.createInventory(user, 9, mainGuiName);
 			
 			ItemStack upgrade = new ItemStack(Material.ANVIL);
 			upgrade.getItemMeta().setDisplayName("Upgrade Items");

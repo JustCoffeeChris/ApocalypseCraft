@@ -2,8 +2,9 @@ package main;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import gui.ClickEvent;
 import gui.MainGui;
-import gui.UpgradeGui;
+//import gui.UpgradeGui;
 import lootEvent.LootEvent;
 import mobs.DeathEvent;
 import mobs.levelZombie;
@@ -19,7 +20,7 @@ public class Main extends JavaPlugin{
 		
 		this.getServer().getPluginManager().registerEvents(new levelZombie(), this);
 		this.getServer().getPluginManager().registerEvents(new LootEvent(), this);
-		this.getServer().getPluginManager().registerEvents(new UpgradeGui(), this);
+		this.getServer().getPluginManager().registerEvents(new ClickEvent(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathEvent(), this);
 		
 		this.getCommand("mainGui").setExecutor(new MainGui());
