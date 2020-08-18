@@ -31,7 +31,11 @@ public class levelZombie implements Listener {
 		ItemStack[] stack = new ItemStack[5];
 
 		if (playerLevel == 0) {
-			return null;
+			stack[0] = new ItemStack(Material.AIR);
+			stack[1] = new ItemStack(Material.AIR);
+			stack[2] = new ItemStack(Material.AIR);
+			stack[3] = new ItemStack(Material.AIR);
+			stack[4] = new ItemStack(Material.AIR);
 		} else if (playerLevel >= 2) {
 
 			stack[4] = new ItemStack(Material.WOODEN_SWORD);
@@ -59,6 +63,23 @@ public class levelZombie implements Listener {
 								if (playerLevel >= 30) {
 									stack[2] = new ItemStack(Material.GOLDEN_CHESTPLATE);
 									stack[1] = new ItemStack(Material.GOLDEN_LEGGINGS);
+
+									if (playerLevel >= 32) {
+										stack[0] = new ItemStack(Material.CHAINMAIL_BOOTS);
+										stack[3] = new ItemStack(Material.CHAINMAIL_HELMET);
+
+										if (playerLevel >= 34) {
+											stack[4] = new ItemStack(Material.IRON_SWORD);
+
+											if (playerLevel >= 36) {
+												stack[1] = new ItemStack(Material.CHAINMAIL_LEGGINGS);
+
+												if (playerLevel >= 38) {
+													stack[2] = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+												}
+											}
+										}
+									}
 								}
 
 							}
@@ -94,10 +115,9 @@ public class levelZombie implements Listener {
 		if (entityEvent.getEntity() instanceof Zombie) {
 			if (entityEvent.getTarget() instanceof Player) {
 				Player ourUser = (Player) entityEvent.getTarget();
-				//ourUser.sendMessage("Du wirst vom Zombie beobachtet!");
+
 				((Zombie) entityEvent.getEntity()).setCustomName("Zombie Level" + ourUser.getLevel());
-				((Zombie) entityEvent.getEntity()).setLootTable(null);
-				
+
 				ItemStack[] stack = createItemStackDependOnLevel(ourUser.getLevel());
 
 				((Zombie) entityEvent.getEntity()).getEquipment().setBoots(stack[0]);
