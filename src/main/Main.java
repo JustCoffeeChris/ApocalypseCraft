@@ -4,6 +4,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import gui.ClickEvent;
 import gui.MainGui;
+import lootEvent.JoinEvents;
+import lootEvent.LevelUpEvent;
 //import gui.UpgradeGui;
 import lootEvent.LootEvent;
 import mobs.DeathEvent;
@@ -22,6 +24,8 @@ public class Main extends JavaPlugin{
 		this.getServer().getPluginManager().registerEvents(new LootEvent(), this);
 		this.getServer().getPluginManager().registerEvents(new ClickEvent(), this);
 		this.getServer().getPluginManager().registerEvents(new DeathEvent(), this);
+		this.getServer().getPluginManager().registerEvents(new LevelUpEvent(), this);
+		this.getServer().getPluginManager().registerEvents(new JoinEvents(), this);
 		
 		this.getCommand("mainGui").setExecutor(new MainGui());
 		//this.getCommand("testZombie").setExecutor(new commands.SpawnZombie(this));

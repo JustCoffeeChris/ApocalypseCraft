@@ -20,7 +20,7 @@ public class LootEvent implements Listener {
 
 	private static HashMap<Location, Long> usedLoot = new HashMap<Location, Long>();
 	final private ArrayList<Material> lootableObject = new ArrayList<Material>(
-			Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER));
+			Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER, Material.GOLD_BLOCK));
 	final private long cooldownTime = 10;
 
 	private void givePlayerLootBarrel(Player user) {
@@ -63,11 +63,10 @@ public class LootEvent implements Listener {
 
 		}
 
-		user.getInventory().addItem(new ItemStack(Material.DIAMOND_BLOCK));
 	}
 
 	private void givePlayerLootCauldron(Player user) {
-		user.getInventory().addItem(new ItemStack(Material.GOLD_BLOCK));
+		user.getInventory().addItem(new ItemStack(Material.MILK_BUCKET));
 	}
 
 	private void givePlayerLootComposter(Player user) {
@@ -88,6 +87,10 @@ public class LootEvent implements Listener {
 			}
 		}
 
+	}
+
+	private void givePlayerLootNugget(Player user) {
+		user.getInventory().addItem(new ItemStack(Material.GOLD_NUGGET));
 	}
 
 	@EventHandler
@@ -120,6 +123,8 @@ public class LootEvent implements Listener {
 			} else if (event.getClickedBlock().getType() == Material.COMPOSTER) {
 				givePlayerLootComposter(event.getPlayer());
 
+			} else if (event.getClickedBlock().getType() == Material.GOLD_BLOCK) {
+				givePlayerLootNugget(event.getPlayer());
 			}
 
 			usedLoot.put(event.getClickedBlock().getLocation(), System.currentTimeMillis());

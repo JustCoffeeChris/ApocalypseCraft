@@ -1,12 +1,12 @@
 package gui;
 
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class ClickEvent implements Listener {
 
@@ -70,7 +70,8 @@ public class ClickEvent implements Listener {
 
 				user.getInventory().setLeggings(new ItemStack(Material.IRON_LEGGINGS));
 
-			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_LEGGINGS && hasEnoughNuggets(user, 50)) {
+			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_LEGGINGS
+					&& hasEnoughNuggets(user, 50)) {
 
 				user.getInventory().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
 
@@ -87,11 +88,13 @@ public class ClickEvent implements Listener {
 
 				user.getInventory().setChestplate(new ItemStack(Material.CHAINMAIL_CHESTPLATE));
 
-			} else if (clickEvent.getCurrentItem().getType() == Material.IRON_CHESTPLATE && hasEnoughNuggets(user, 40)) {
+			} else if (clickEvent.getCurrentItem().getType() == Material.IRON_CHESTPLATE
+					&& hasEnoughNuggets(user, 40)) {
 
 				user.getInventory().setChestplate(new ItemStack(Material.IRON_CHESTPLATE));
 
-			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_CHESTPLATE && hasEnoughNuggets(user, 64)) {
+			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_CHESTPLATE
+					&& hasEnoughNuggets(user, 64)) {
 
 				user.getInventory().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
 
@@ -117,6 +120,16 @@ public class ClickEvent implements Listener {
 				user.getInventory().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
 
 			}
+
+			ItemStack[] armor = user.getInventory().getArmorContents();
+
+			for (int i = 0; i < armor.length; i++) {
+				ItemMeta tmpMeta = armor[i].getItemMeta();
+				tmpMeta.setUnbreakable(true);
+				armor[i].setItemMeta(tmpMeta);
+			}
+			
+			user.getInventory().setArmorContents(armor);
 
 			clickEvent.setCancelled(true);
 		}
