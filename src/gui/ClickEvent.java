@@ -121,6 +121,28 @@ public class ClickEvent implements Listener {
 
 			}
 
+			//SWORD
+			
+			if (clickEvent.getCurrentItem().getType() == Material.STONE_SWORD && hasEnoughNuggets(user, 10)) {
+
+				user.getInventory().setItem(0, new ItemStack(Material.STONE_SWORD));
+
+			} else if (clickEvent.getCurrentItem().getType() == Material.GOLDEN_SWORD
+					&& hasEnoughNuggets(user, 20)) {
+
+				user.getInventory().setItem(0, new ItemStack(Material.GOLDEN_SWORD));
+
+			} else if (clickEvent.getCurrentItem().getType() == Material.IRON_SWORD && hasEnoughNuggets(user, 35)) {
+
+				user.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
+
+			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_SWORD
+					&& hasEnoughNuggets(user, 50)) {
+
+				user.getInventory().setItem(0, new ItemStack(Material.DIAMOND_SWORD));
+
+			}
+
 			ItemStack[] armor = user.getInventory().getArmorContents();
 
 			for (int i = 0; i < armor.length; i++) {
@@ -128,6 +150,12 @@ public class ClickEvent implements Listener {
 				tmpMeta.setUnbreakable(true);
 				armor[i].setItemMeta(tmpMeta);
 			}
+
+			ItemStack weapon = user.getInventory().getItem(0);
+			ItemMeta tmpMeta = weapon.getItemMeta();
+			tmpMeta.setUnbreakable(true);
+			weapon.setItemMeta(tmpMeta);
+			user.getInventory().setItem(0, weapon);
 			
 			user.getInventory().setArmorContents(armor);
 

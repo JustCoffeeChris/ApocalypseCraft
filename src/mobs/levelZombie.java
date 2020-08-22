@@ -1,5 +1,8 @@
 package mobs;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -11,6 +14,8 @@ import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class levelZombie implements Listener {
+
+	ArrayList<EntityType> validMobs = new ArrayList<EntityType>(Arrays.asList(EntityType.ZOMBIE, EntityType.SKELETON));
 
 	private void fillRestOfArray(ItemStack[] arr) {
 
@@ -76,6 +81,22 @@ public class levelZombie implements Listener {
 
 												if (playerLevel >= 38) {
 													stack[2] = new ItemStack(Material.CHAINMAIL_CHESTPLATE);
+
+													if (playerLevel >= 40) {
+														stack[0] = new ItemStack(Material.IRON_BOOTS);
+
+														if (playerLevel >= 42) {
+															stack[3] = new ItemStack(Material.IRON_HELMET);
+
+															if (playerLevel >= 44) {
+																stack[1] = new ItemStack(Material.IRON_LEGGINGS);
+
+																if (playerLevel >= 46) {
+																	stack[2] = new ItemStack(Material.IRON_CHESTPLATE);
+																}
+															}
+														}
+													}
 												}
 											}
 										}
@@ -98,13 +119,7 @@ public class levelZombie implements Listener {
 
 	@EventHandler
 	public void onJoinEvent(CreatureSpawnEvent event) {
-		if (
-
-		(event.getEntityType() == EntityType.SLIME) || (event.getEntityType() == EntityType.CREEPER)
-				|| (event.getEntityType() == EntityType.SPIDER)
-
-		) {
-
+		if (!(validMobs.contains(event.getEntityType()))) {
 			event.getEntity().remove();
 		}
 	}

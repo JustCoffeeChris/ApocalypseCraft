@@ -14,7 +14,7 @@ public class LevelUpEvent implements Listener {
 
 	static boolean played = false;
 	final private String hellName = "world_nether";
-	final private String endName = "world_end";
+	final private String endName = "world_the_end";
 
 	@EventHandler
 	public void playerLevelUp(PlayerLevelChangeEvent levelUpEvent) {

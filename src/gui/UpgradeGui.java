@@ -100,7 +100,6 @@ public class UpgradeGui {
 		
 		switch (user.getInventory().getHelmet().getType()) {
 		case LEATHER_HELMET:
-			user.sendMessage("Lederkopf");
 			stack[3] = new ItemStack(Material.GOLDEN_HELMET);
 			break;
 		case GOLDEN_HELMET:

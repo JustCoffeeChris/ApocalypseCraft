@@ -2,7 +2,7 @@ package lootEvent;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +23,11 @@ public class LootEvent implements Listener {
 			Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER, Material.GOLD_BLOCK));
 	final private long cooldownTime = 10;
 
+	@EventHandler
+	public void disableDrop(PlayerDropItemEvent event) {
+		event.setCancelled(true);
+	}
+	
 	private void givePlayerLootBarrel(Player user) {
 
 		for (int i = 0; i < 2; i++) {

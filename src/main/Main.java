@@ -8,6 +8,7 @@ import lootEvent.JoinEvents;
 import lootEvent.LevelUpEvent;
 //import gui.UpgradeGui;
 import lootEvent.LootEvent;
+import lootEvent.WorldEvents;
 import mobs.DeathEvent;
 import mobs.levelZombie;
 
@@ -26,9 +27,9 @@ public class Main extends JavaPlugin{
 		this.getServer().getPluginManager().registerEvents(new DeathEvent(), this);
 		this.getServer().getPluginManager().registerEvents(new LevelUpEvent(), this);
 		this.getServer().getPluginManager().registerEvents(new JoinEvents(), this);
+		this.getServer().getPluginManager().registerEvents(new WorldEvents(), this);
 		
 		this.getCommand("mainGui").setExecutor(new MainGui());
-		//this.getCommand("testZombie").setExecutor(new commands.SpawnZombie(this));
 	}
 
 	// Fired when plugin is disabled

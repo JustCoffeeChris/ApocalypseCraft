@@ -1,13 +1,9 @@
 package lootEvent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -15,12 +11,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class JoinEvents implements Listener {
 
-	final ArrayList<Material> repairableMaterials = new ArrayList<Material>(Arrays.asList(Material.WOODEN_SWORD,Material.STONE_SWORD, Material.GOLDEN_SWORD,
-			Material.IRON_SWORD, Material.DIAMOND_SWORD, Material.NETHERITE_SWORD, Material.LEATHER_BOOTS, Material.GOLDEN_BOOTS, Material.CHAINMAIL_BOOTS
-			, Material.IRON_BOOTS, Material.DIAMOND_BOOTS, Material.NETHERITE_BOOTS, Material.LEATHER_LEGGINGS, Material.GOLDEN_LEGGINGS, Material.CHAINMAIL_LEGGINGS
-			, Material.IRON_LEGGINGS, Material.DIAMOND_LEGGINGS, Material.NETHERITE_LEGGINGS, Material.LEATHER_CHESTPLATE, Material.GOLDEN_CHESTPLATE, Material.CHAINMAIL_CHESTPLATE
-			, Material.LEATHER_CHESTPLATE, Material.LEATHER_CHESTPLATE, Material.LEATHER_CHESTPLATE));
-	
 	public void repairItems(Player user) {
 
 		user.getInventory().getBoots().getItemMeta().setUnbreakable(true);
@@ -38,17 +28,6 @@ public class JoinEvents implements Listener {
 			}
 		}
 
-	}
-
-	@EventHandler
-	public void onDamage(EntityDamageEvent evt) {
-		if (evt.getEntity() instanceof Player) {
-			//final Player p = (Player) evt.getEntity();
-			// p.sendMessage("You got Damange");
-
-			//repairItems(p);
-
-		}
 	}
 
 	@EventHandler
