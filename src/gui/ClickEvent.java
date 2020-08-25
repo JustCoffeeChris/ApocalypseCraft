@@ -10,12 +10,19 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class ClickEvent implements Listener {
 
+	final private int slotNumbers = 35;
+	
 	private boolean hasEnoughNuggets(Player user, int nuggets) {
-		if (user.getInventory().getItem(9).getType() == Material.GOLD_NUGGET
-				&& (user.getInventory().getItem(9).getAmount() > nuggets)) {
-			user.getInventory().getItem(9).setAmount(user.getInventory().getItem(9).getAmount() - nuggets);
-			return true;
+
+		for (int i = 0; i < slotNumbers; i++) {
+			if ( (user.getInventory().getItem(i) != null) 
+					&& (user.getInventory().getItem(i).getType() == Material.GOLD_NUGGET)
+					&& (user.getInventory().getItem(i).getAmount() >= nuggets)) {
+				user.getInventory().getItem(i).setAmount(user.getInventory().getItem(i).getAmount() - nuggets);
+				return true;
+			}
 		}
+
 		return false;
 	}
 
@@ -121,14 +128,13 @@ public class ClickEvent implements Listener {
 
 			}
 
-			//SWORD
-			
+			// SWORD
+
 			if (clickEvent.getCurrentItem().getType() == Material.STONE_SWORD && hasEnoughNuggets(user, 10)) {
 
 				user.getInventory().setItem(0, new ItemStack(Material.STONE_SWORD));
 
-			} else if (clickEvent.getCurrentItem().getType() == Material.GOLDEN_SWORD
-					&& hasEnoughNuggets(user, 20)) {
+			} else if (clickEvent.getCurrentItem().getType() == Material.GOLDEN_SWORD && hasEnoughNuggets(user, 20)) {
 
 				user.getInventory().setItem(0, new ItemStack(Material.GOLDEN_SWORD));
 
@@ -136,8 +142,7 @@ public class ClickEvent implements Listener {
 
 				user.getInventory().setItem(0, new ItemStack(Material.IRON_SWORD));
 
-			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_SWORD
-					&& hasEnoughNuggets(user, 50)) {
+			} else if (clickEvent.getCurrentItem().getType() == Material.DIAMOND_SWORD && hasEnoughNuggets(user, 50)) {
 
 				user.getInventory().setItem(0, new ItemStack(Material.DIAMOND_SWORD));
 
@@ -156,7 +161,7 @@ public class ClickEvent implements Listener {
 			tmpMeta.setUnbreakable(true);
 			weapon.setItemMeta(tmpMeta);
 			user.getInventory().setItem(0, weapon);
-			
+
 			user.getInventory().setArmorContents(armor);
 
 			clickEvent.setCancelled(true);

@@ -119,7 +119,7 @@ public class levelZombie implements Listener {
 
 	@EventHandler
 	public void onJoinEvent(CreatureSpawnEvent event) {
-		if (!(validMobs.contains(event.getEntityType()))) {
+		if ( !(validMobs.contains(event.getEntityType())) ){
 			event.getEntity().remove();
 		}
 	}
