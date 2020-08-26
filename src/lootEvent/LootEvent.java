@@ -21,7 +21,7 @@ public class LootEvent implements Listener {
 	private static HashMap<Location, Long> usedLoot = new HashMap<Location, Long>();
 	final private ArrayList<Material> lootableObject = new ArrayList<Material>(
 			Arrays.asList(Material.BARREL, Material.CAULDRON, Material.COMPOSTER, Material.GOLD_BLOCK));
-	final private long cooldownTime = 10;
+	final private long cooldownTime = 300;
 
 	@EventHandler
 	public void disableDrop(PlayerDropItemEvent event) {
